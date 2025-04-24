@@ -122,8 +122,8 @@ singleBattle atk def = sboToStandard singleBattleSbo
             _ -> ThreeOutcome x (y + 1) z
         count2 curr (TwoOutcome x y) = if curr == [False] then TwoOutcome (x + 1) y else TwoOutcome x (y + 1)
         singleBattleSbo = case counts minRolls (comparisons minRolls) of
-                        (ThreeOutcome x y z) -> ThreeOutcome (x / rollCount) (y / rollCount) (z / rollCount)
-                        (TwoOutcome x y) -> TwoOutcome (x / rollCount) (y / rollCount)
+                            (ThreeOutcome x y z) -> ThreeOutcome (x / rollCount) (y / rollCount) (z / rollCount)
+                            (TwoOutcome x y) -> TwoOutcome (x / rollCount) (y / rollCount)
         sboToStandard sbo = case sbo of
                               TwoOutcome al1 dl1 -> [(al1, (1, 0)), (dl1, (0, 1))]
                               ThreeOutcome al2 bl1 dl2 -> [(al2, (2, 0)), (bl1, (1, 1)), (dl2, (0, 2))]
@@ -145,8 +145,9 @@ exactSuccessProb' bf@(Battlefield a d)
         Nothing -> do
           let outcomes = fromMaybe [] $ lookup (maxAtk bf, maxDef bf) singleBattleTable
           res <- sum <$> mapM (\(prob, (aLoss, dLoss)) -> do
-                      subRes <- exactSuccessProb' $ Battlefield (a - aLoss) (d - dLoss)
-                      return $ prob * subRes) outcomes
+                              subRes <- exactSuccessProb' $ Battlefield (a - aLoss) (d - dLoss)
+                              return $ prob * subRes)
+                              outcomes
           modify $ Map.insert bf res
           return res
 
